@@ -1,45 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Django Girls blog</title>
-    </head>
-    <body>
-        <header>
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </header>
-        {% if posts %}
-            <ul>
-            {% for post in posts %}
-                
-                <h2>{{post.title}}</h2>
-                <p>{{ post.text|linebreaks}}</p>
-                <p><small>Published: {{ post.published_date}}</small><p>
-                
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No posts yet.</p>
-        {% endif %}
-    </body>
-</html>
+{% extends 'blog/base.html' %}
 
-
-{% comment %} <h1>A heading - per la tua intestazione più importante</h1> 
-    <h2>A sub-heading - per un titolo di livello inferiore</h2> 
-    <h3>A sub-sub-heading</h3> 
-    <p>A paragraph of text</p>
-    <em>text enfatizza il tuo testo</em> 
-    <strong>text enfatizza fortemente il tuo testo</strong> 
-    <br> va in un'altra riga (puoi mettere qualsiasi cosa dentro br)
-    <a href="https://djangogirls.org">link crea un link</a> 
-    <ul>primo elemento<li>secondo elemento</li><li>fa una lista, proprio come questa qui!</li></ul> 
-    <div>definisce una sezione della pagina</div> 
-    <nav>definisce un insieme di collegamenti di navigazione</nav> 
-    <article>specifica il contenuto autonomo e indipendente</article> 
-    <section>definisce una sezione in un documento</section> 
-    <header>specifica un'intestazione per un documento o una sezione</header> 
-    <main>specifica il contenuto principale di un documento</main> 
-    <aside>definisce alcuni contenuti a parte il contenuto in cui è inserito (come una barra laterale)</aside> 
-    <footer>definisce un piè di pagina per un documento o sezione</footer> 
-    <time>definisce un'ora (o datetime) specifica</time> 
-    {% endcomment %}
+{% block content %}
+    {% for post in posts %}
+        <article class="post">
+            <time class="date">
+                {{ post.published_date }}
+            </time>
+                <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                <p>{{ post.text|linebreaksbr }}</p>
+        </article>
+    {% endfor %}
+{% endblock %}
